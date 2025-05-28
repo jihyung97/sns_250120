@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/userLayout}"
+>
+<th:block layout:fragment="content">
+    <section class="h-75 d-flex justify-content-center align-items-center">
+      <div class="card">
+          <!--게시글-->
+          <div>
+              <!--게시글 상단 바-->
+              <div class="bg-default d-flex align-items-center justify-content-between">
+                  <div><span>글쓴이</span></div>
+                  <div><h1>...</h1></div>
+              </div>
+              <!--그림-->
+              <div>
+                  <div class="w-75 h-100">
+                      <img src="">
+                  </div>
+
+              </div>
+              <!-- 좋아요-->
+              <div>
+
+              </div>
+              <!--text-->
+              <div class="d-flex">
+                  <div class="w-15">글쓴이</div>
+                  <div class="w-85" >
+                      <!--서버에서 가져올 글 내용 -->
+                      <input type="text" class="w-100 h-100" id="postText">
+                  </div>
+
+              </div>
+          </div>
+          <!--댓글-->
+          <div></div>
+      </div>
+
+
+    </section>
+
+</th:block>
