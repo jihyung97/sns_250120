@@ -1,0 +1,42 @@
+header{
+    background-color: #defc7d;
+}
+
+.bg-user{
+    height: 400px;
+    background-color: #defc7d;
+}
+.user-input{
+    height:30%;
+}
+.bg-button{
+    background-color: #b2f711;
+}
+.bg-default{
+    background-color: #defc7d;
+}
+#wrap{
+    height: 1000px;
+}
+.title-signup{
+    height:15%;
+}
+.h-17{
+    height:17%;
+}
+.h-18{
+    height:18%;
+}
+.h-20{
+    height:20%;
+}
+.h-60{
+    height:60%;
+}
+.h-85{
+    height:85%;
+}
+#post{
+    width:1000px;
+    height:200px;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+      xmlns:th="http://www.thymeleaf.org"
+>
+<th:block th:fragment="headerFragment">
+  <!--header 의 Fragment -->
+  <header class="bg-header d-flex">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <div>
+
+        <div class="ml-5"><h1>Memogram</h1></div>
+      </div>
+        <div th:if="${session.userName != null}">
+          <span th:text="|${session.userName}님 안녕하세요.|">OO님 안녕하세요</span>
+          <a href="/user/sign-out">로그아웃</a>
+        </div>
+
+        <!-- 비로그인 시 -->
+        <div th:unless="${session.userName != null}">
+          <a href="/user/sign-in-view">로그인</a>
+        </div>
+
+    </div>
+
+
+  </header>
+
+</th:block>
+
+</html>

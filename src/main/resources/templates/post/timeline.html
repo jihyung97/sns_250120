@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+
+<th:block th:replace="fragments/config :: configFragment"></th:block>
+
+
+<body>
+<div id="post">
+  <div id="w-100 h-100">
+    <div class="h-75" >
+      <input type="text" placeholder="내용을 입력해주세요." class="h-100">
+    </div>
+    <div class="h-25 justify-content-between">
+      <div>
+        <span>이미지</span>
+      </div>
+      <div>
+        <button class="button">업로드</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
