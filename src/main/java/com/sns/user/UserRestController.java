@@ -5,7 +5,11 @@ import com.sns.user.service.UserBO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +19,7 @@ import java.util.Map;
 @RestController
 public class UserRestController {
     private final UserBO userBO;
+
     @GetMapping("/is-id-duplicated")
     public Map<String,Object> isIdDuplicated(
             @RequestParam("loginId") String loginId
@@ -26,16 +31,18 @@ public class UserRestController {
         return result;
 
     }
+
+
     @PostMapping("/sign-up")
     public Map<String,Object>  signUp(
-            @RequestParam("loginId") String loginId
-            , @RequestParam("password") String password
-            , @RequestParam("name") String name
-            , @RequestParam("email") String email
+         @RequestParam("loginId") String loginId
+         , @RequestParam("password") String password
+         , @RequestParam("name") String name
+         , @RequestParam("email") String email
 
     ){
-        Map<String,Object> result = new HashMap<>();
-        boolean isSuccess = userBO.addUser(loginId,password,name,email);
+         Map<String,Object> result = new HashMap<>();
+         boolean isSuccess = userBO.addUser(loginId,password,name,email);
         if(isSuccess){
             result.put("code", 200);
         }else{
@@ -46,23 +53,23 @@ public class UserRestController {
     }
 
     @PostMapping("/sign-in")
-    public Map<String,Object>  signUp(
+    public Map<String,Object>  signIn(
             @RequestParam("loginId") String loginId
             , @RequestParam("password") String password
             , HttpServletRequest request
             ){
         Map<String,Object> result = new HashMap<>();
-       UserEntity userEntity  = userBO.getUserEntityByLoginIdAndPassword(loginId,password);
-        if(userEntity != null){
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", userEntity.getId());
-            session.setAttribute("userName", userEntity.getName());
-            session.setAttribute("userLoginId", userEntity.getLoginId());
-            result.put("code", 200);
-        }else{
-            result.put("code", 500);
-            result.put("error_message","사용자가 존재하지 않습니다");
+        HttpSession session =  request.getSession();
+        UserEntity user = userBO.getUserEntityByLoginIdAndPassword(loginId,password);
+        if(user == null){
+            result.put("code", 300);
+            result.put("error_message", "존재하지 않는 사용자 입니다");
+            return result;
         }
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("userName", user.getName());
+        session.setAttribute("userLoginId", user.getLoginId());
+        result.put("code",200);
         return result;
     }
 

@@ -15,11 +15,40 @@ header{
 .bg-default{
     background-color: #defc7d;
 }
+
+#post-section{
+    height:200px;
+}
 #wrap{
     height: 1000px;
 }
+.w-30{
+    width:30%;
+}
+.w-65{
+    width:65%;
+}
+.w-70{
+    width:70%;
+}
+.w-75{
+    width:75%;
+}
+.w-80{
+    width:80%;
+}
+.w-85{
+    width:85%;
+}
+
+.w-90{
+    width: 90%;
+}
 .title-signup{
     height:15%;
+}
+.h-10{
+    height:10%;
 }
 .h-17{
     height:17%;
@@ -30,13 +59,39 @@ header{
 .h-20{
     height:20%;
 }
+.h-30{
+    height:30%;
+}
 .h-60{
     height:60%;
+}
+.h-70{
+    height:70%;
 }
 .h-85{
     height:85%;
 }
+.h-90{
+    height:90%;
+}
 #post{
-    width:1000px;
-    height:200px;
+
+    box-shadow: 5px 5px 5px gray;
+
+
+}
+#cardList-section{
+    height:800px;
+}
+.card{
+    height:800px;
+}
+#card-content{
+    height:120px;
+}
+.bg-post{
+    background-color: #e5fec2;
+}
+#comment-section{
+    height: 200px;
 }

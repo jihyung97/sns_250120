@@ -11,7 +11,7 @@
           <h1>로그인</h1>
         </div>
         <div class="d-flex justify-content-center align-items-center bg-default h-85">
-          <div class="w-50 h-60 ">
+          <div class="w-90 h-75 ">
             <form id = "loginForm" action="/user/sign-in" method="post" class="h-100">
               <div class="d-flex justify-content-center w-100 user-input">
                 <input type="text" id="loginId" name = "loginId" class="col-7">
@@ -63,7 +63,7 @@
             $.post(url, params)
             .done(function(data){
               if(data.code == 200){
-                location.href = "/post/post-list-view";
+                location.href = "/timeline";
 
               }else{
                 alert(data.error_message);

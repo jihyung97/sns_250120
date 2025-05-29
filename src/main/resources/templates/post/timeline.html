@@ -14,8 +14,14 @@
       <input type="text" placeholder="내용을 입력해주세요." class="h-100">
     </div>
     <div class="h-25 justify-content-between">
-      <div>
-        <span>이미지</span>
+      <div class="file-upload d-flex">
+        <!-- file 태그를 숨겨두고 이미지를 클릭하면 파일을 클릭한 것과 같은 효과를 준다. -->
+        <input type="file" id="file" accept=".jpg, .png, .gif" class="d-none">
+
+        <!-- 이미지에 마우스 올리면 마우스 커서가 link로 변경 -->
+        <a href="#" id="fileUploadBtn"><img width="35" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png"></a>
+
+        <div id="fileName" class="ml-2"></div>
       </div>
       <div>
         <button class="button">업로드</button>
