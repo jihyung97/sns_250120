@@ -81,10 +81,10 @@ header{
 
 }
 #cardList-section{
-    height:800px;
+    min-height:800px;
 }
 .card{
-    height:800px;
+    min-height:800px;
 }
 #card-content{
     height:120px;

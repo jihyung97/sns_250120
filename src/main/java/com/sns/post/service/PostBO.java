@@ -1,5 +1,6 @@
 package com.sns.post.service;
 
+import com.sns.comment.domain.Comment;
 import com.sns.common.FileManagerService;
 import com.sns.post.domain.Post;
 import com.sns.post.mapper.PostMapper;
@@ -33,5 +34,6 @@ public class PostBO {
 
         return postMapper.insertPost(userId,content,imagePath);
     }
+
 
 }

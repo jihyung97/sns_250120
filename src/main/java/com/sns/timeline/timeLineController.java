@@ -1,5 +1,7 @@
 package com.sns.timeline;
 
+import com.sns.comment.domain.Comment;
+import com.sns.comment.service.CommentBO;
 import com.sns.post.domain.Post;
 import com.sns.post.service.PostBO;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class timeLineController {
     private final PostBO postBO;
+    private final CommentBO commentBO;
     @RequestMapping("/timeline")
     public String timeLineView(HttpSession session, Model model){
         Integer userId = (Integer) session.getAttribute("userId");
@@ -23,6 +26,7 @@ public class timeLineController {
         }
 
         List<Post> postList = postBO.getPostListByUserId(userId);
+        List<Comment> commentList = commentBO.getCommentListByPostId;
 
         model.addAttribute("postList",postList);
         System.out.println(postList + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
