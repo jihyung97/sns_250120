@@ -67,6 +67,9 @@ public class UserRestController {
             return result;
         }
         session.setAttribute("userId", user.getId());
+        System.out.println(user.getId());
+        System.out.println(user.getLoginId() + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         session.setAttribute("userName", user.getName());
         session.setAttribute("userLoginId", user.getLoginId());
         result.put("code",200);
