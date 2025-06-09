@@ -46,4 +46,24 @@
 
     </insert>
 
+    <select
+
+            id = "selectPostListDescByCreatedAt"
+
+            resultType = "com.sns.post.domain.Post"
+    >
+        SELECT
+        `id`
+        ,`userId`
+        ,`content`
+        ,`imagePath`
+        ,`createdAt`
+        ,`updatedAt`
+
+        FROM
+        `post`
+
+        ORDER BY `id` DESC
+    </select>
+
 </mapper>

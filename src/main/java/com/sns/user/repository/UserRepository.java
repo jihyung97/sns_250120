@@ -11,5 +11,6 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer> {
     public Optional<UserEntity> findByLoginIdAndPassword(String loginId, String password);
     //userName 중복 불가능 설정 해야됨 (회원가입), table name unique 키로
     public Optional<UserEntity> findByName(String userName);
+    public Optional<UserEntity> findById(int Id);
     List<UserEntity> findByIdIn(List<Integer> userIds);
 }

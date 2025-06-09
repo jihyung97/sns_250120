@@ -33,6 +33,7 @@ public class CommentBO {
     public int removeCommentById(int commentId) {
        return commentMapper.deleteCommentById(commentId);
     }
+    public List<Comment> getCommentListBypostId(int postId){return commentMapper.selectCommentListByPostId;}
 
 //    public Map<Integer , List<Comment>> selectCommentByPostIdOfUserId (int UserId){
 //        List<Post> PostList = postMapper.selectPostByUserId(userId);  //userId로 Post를 내림차순으로 가져온다

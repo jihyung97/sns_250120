@@ -19,6 +19,8 @@ public class PostBO {
     public List<Post> getPostListByUserId(int userId){
         return postMapper.selectPostListByUserId(userId);
     }
+    public List<Post>  getPostListDescByCreatedAt(){return postMapper.selectPostListDescByCreatedAt();}
+
 
 
     public int addPost(

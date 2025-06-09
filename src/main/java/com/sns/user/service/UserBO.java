@@ -55,6 +55,10 @@ public class UserBO {
         return userIdToUserName;
     }
 
+    public UserEntity  getUserEntityByPostId (int postId){
+        return userRepository.findById(postId).orElse(null);
+    };
+
     public Integer getUserIdByUserName(String userName)
     {
         UserEntity user = userRepository.findByName(userName).orElse(null);
