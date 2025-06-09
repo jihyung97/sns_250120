@@ -3,7 +3,9 @@ package com.sns.timeline;
 import com.sns.comment.domain.Comment;
 import com.sns.comment.service.CommentBO;
 import com.sns.post.domain.Post;
+import com.sns.post.dto.PostWithComments;
 import com.sns.post.service.PostBO;
+import com.sns.post.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,18 +20,19 @@ import java.util.List;
 public class timeLineController {
     private final PostBO postBO;
     private final CommentBO commentBO;
+    private final PostService postService;
     @RequestMapping("/timeline")
     public String timeLineView(HttpSession session, Model model){
         Integer userId = (Integer) session.getAttribute("userId");
         if(userId == null){
             return("redirect:/user/sign-in-view");
         }
-
+       List<PostWithComments> postWithCommentsList = postService.getPostWithCommentsByUserId(userId);
         List<Post> postList = postBO.getPostListByUserId(userId);
-        List<Comment> commentList = commentBO.getCommentListByPostId;
+       System.out.println(postWithCommentsList + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        model.addAttribute("postList",postList);
-        System.out.println(postList + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        model.addAttribute("postWithCommentsList",postWithCommentsList);
+
         return("timeline/timeline");
     }
 

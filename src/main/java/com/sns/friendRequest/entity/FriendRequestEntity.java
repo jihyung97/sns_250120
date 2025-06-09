@@ -1,4 +1,4 @@
-package com.sns.user.entity;
+package com.sns.friendRequest.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,20 +12,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name="user")
+@Table(name="friendRequest")
 @Entity
-public class UserEntity {
+public class FriendRequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String loginId;
-    private String password;
-    //name도 not null로
-    private String name;
-    private String email;
+    private int myId;
+    private int friendId;
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+
 
 }

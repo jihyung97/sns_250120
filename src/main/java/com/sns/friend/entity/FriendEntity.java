@@ -1,9 +1,8 @@
-package com.sns.user.entity;
+package com.sns.friend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -12,20 +11,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name="user")
+@Table(name="friend")
 @Entity
-public class UserEntity {
+public class FriendEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String loginId;
-    private String password;
-    //name도 not null로
-    private String name;
-    private String email;
+    private int myId;
+    private int friendId;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 
 }

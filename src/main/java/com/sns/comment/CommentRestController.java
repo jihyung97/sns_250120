@@ -3,6 +3,7 @@ package com.sns.comment;
 import com.sns.comment.service.CommentBO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +38,16 @@ public class CommentRestController {
         return result;
 
 
+    }
+    @RequestMapping("/delete")
+    public Map<String,Object> deleteComment(@RequestParam(required = false) Integer commentId){
+        Map<String,Object> result = new HashMap<>();
+        int rowCount = commentBO.removeCommentById(commentId);
+        if(rowCount != 0 ){
+            result.put("code", 200);
+        }else{
+            result.put("code",500);
+        }
+        return result;
     }
 }

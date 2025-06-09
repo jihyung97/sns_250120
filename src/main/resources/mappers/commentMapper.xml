@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sns.comment.domain.">
+<mapper namespace="com.sns.comment.mapper.CommentMapper">
     <insert
             id = "insertComment"
-            parameterType = "com.sns.comment.domain.Comment"
+            parameterType = "map"
     >
         INSERT INTO `comment`
         (
-        ,`postId`
+        `postId`
         ,`userId`
         ,`content`
         ,`createdAt`
@@ -24,6 +24,34 @@
         )
 
     </insert>
+
+    <select id="selectCommentListByPostIds"  parameterType="java.util.List"  resultType="com.sns.comment.domain.Comment">
+
+        SELECT
+        `id`
+        ,`postId`
+        ,`userId`
+        ,`content`
+        ,`createdAt`
+        ,`updatedAt`
+
+        FROM
+        `comment`
+        WHERE
+        `postId` IN
+        <foreach collection="postIds" item="postId"  open="(" separator="," close=")">
+            #{postId}
+        </foreach>
+    </select>
+
+    <delete id="deleteCommentById"  parameterType="int"  >
+
+        DELETE from
+        `comment`
+        WHERE
+        `id` = #{commentId}
+    </delete>
+
 
 
 </mapper>

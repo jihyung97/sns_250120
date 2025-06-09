@@ -34,10 +34,38 @@
     </div>
 
   </section>
+  <div class="d-flex">
+  <section id = "friendList">
+    <div class="d-flex">
+      <input type="text" id="search-friend">
+      <span id="friend-search-btn">친구요청</span>
+
+
+    </div>
+    <div>
+      <div><h3>친구요청 리스트</h3></div>
+      <div>
+        <!--th:each로 친구요청 리스트-->
+        <div  class="d-flex">
+          <span></span>
+          <span class="friend-add-btn">친구추가</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div><h3>친구목록</h3></div>
+      <!--th:each로 친구 리스트-->
+      <div >
+        <span class="friendName"></span>
+        <span class="friend-delete-btn">친구 삭제</span>
+      </div>
+
+    </div>
+  </section>
   <!--card 목록-->
   <section id="cardList-section">
 
-    <div class="card" th:each="post : ${postList}" th:data-postId="${post.id}"  >
+    <div class="card" th:each="postWithComments : ${postWithCommentsList}" th:data-postId="${postWithComments.postId}"  >
       <div class="h-70">
         <!--더보기 -->
         <div class="bg-default w-100 d-flex justify-content-between ">
@@ -50,7 +78,7 @@
         <!--이미지-->
         <div class=" d-flex justify-content-center align-items-center">
 
-          <img th:src="@{${post.imagePath}}" class="w-50" alt="본문 이미지" />
+          <img th:src="@{${postWithComments.imagePath}}" class="w-50" alt="본문 이미지" />
 
 
         </div>
@@ -63,11 +91,11 @@
 
         </div>
 
-        <div class=" d-flex" class ="card-content">
+        <div class=" d-flex card-content">
           <div><span class="text-bold col-3">글쓴이</span></div>
           <div class="w-75">
             <!-- 글 context-->
-            <span class="w-85 h-90" id="text-content" th:text="${post.content}"></span>
+            <span class="w-85 h-90" id="text-content" th:text="${postWithComments.content}"></span>
           </div>
         </div>
       </div>
@@ -76,17 +104,20 @@
           <span>댓글</span>
         </div>
         <!--댓글 목록들-->
-        <div class="h-70">
-          <div class="d-flex">
-            <div class="w-30"><span class="text-bold">고양이석사</span></div>
-            <div class="w-70"><span>이쁘네요</span></div>
+        <div class="h-70" >
+          <div class="d-flex comment" th:each="comment : ${postWithComments.comments}" th:data-commentid="${comment.id}" >
+            <div class="w-30"><span class="text-bold" th:text="${comment.userName}"></span></div>
+            <div class="w-70"  th:text="${comment.content}"><span></span></div>
+            <button class="button comment-delete-btn">삭제</button>
           </div>
         </div>
         <!--댓글 입력-->
         <div class="h-20">
-          <div class="h-90 w-90 d-flex justify-content-center">
+          <div class="h-90 w-90 d-flex justify-content-between">
             <input type="text" class="form-control comment-text" placeholder="댓글 내용을 입력해주세요">
-            <button class="button form-control btn-comment">게시</button>
+
+
+              <button class="button form-control btn-comment">게시</button>
 
 
           </div>
@@ -101,6 +132,8 @@
 
 
   </section>
+  </div>
+</th:block>
 
   <script>
     $(function(){
@@ -177,7 +210,7 @@
         $.ajax({
           type:"get"
           ,url:"/comment/create"
-          ,data : {"comment" : content, "postId" : postId}
+          ,data : {"content" : content, "postId" : postId}
           // 서버에서 response받아옴
           ,success: function(data){
             if(data.code == 200){
@@ -197,13 +230,60 @@
 
 
 
-    })
-      
+
+      $(".comment-delete-btn").on("click",function(){
+
+        let commentId = $(this).closest(".comment").data(`commentid`);
+        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+        $.ajax({
+          type:"post"
+          ,url:"/comment/delete"
+          ,data : {"commentId" : commentId}
+          // 서버에서 response받아옴
+          ,success: function(data){
+            if(data.code == 200){
+              location.reload();
+            } else{
+              alert(data.error_message);
+            }
+          }
+          ,error: function(e){
+            alert("댓글 삭제를 실패하였습니다");
+          }
+          
+        });
+      });
+
+
+      $("#friend-search-btn").on("click",function(){
+
+        let friendName = $("#search-friend").val().trim();
+        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+        $.ajax({
+          type:"get"
+          ,url:"/friend/friend-request"
+          ,data : {"friendName" : friendName}
+          // 서버에서 response받아옴
+          ,success: function(data){
+            if(data.code == 200){
+              location.reload();
+            } else{
+              alert(data.error_message);
+            }
+          }
+          ,error: function(e){
+            alert("친구요청을 할 수 없습니다");
+          }
+          
+        });
+      });
+    
 
 
 
 
-    ;
+
+    });
 
   </script>
 
