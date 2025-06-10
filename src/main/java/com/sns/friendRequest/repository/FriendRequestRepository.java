@@ -8,12 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface FriendRequestRepository extends JpaRepository<FriendRequestEntity,Integer> {
-    public Optional<FriendRequestEntity> findByMyIdAndFriendId(int myId, int friendId);
-    public List<FriendRequestEntity> findByMyId(int myId);
-    public List<FriendRequestEntity> findByFriendId(int friendId);
-
-
-
-
-}
+//public interface FriendRequestRepository extends JpaRepository<FriendRequestEntity,Integer> {
+//    public Optional<FriendRequestEntity> findByMyIdAndFriendId(int myId, int friendId);
+//    public List<FriendRequestEntity> findByMyId(int myId);
+//    public List<FriendRequestEntity> findByFriendId(int friendId);
+//
+//
+//
+//
+//}

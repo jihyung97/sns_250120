@@ -12,16 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-RestController
-@RequestMapping("/friend")
-@RequiredArgsConstructor
-public class FriendRestController {
-
-    private final FriendBO friendBO;
-    @RequestMapping("/friend-request")
-    public Map<String,Object> friendRequest(@RequestParam("friendName") String friendName){
-
-        Map<String,Object> result = friendBO.searchFriendName(friendName);
-    }
-
-}
+//RestController
+//@RequestMapping("/friend")
+//@RequiredArgsConstructor
+//public class FriendRestController {
+//
+//    private final FriendBO friendBO;
+//    @RequestMapping("/friend-request")
+//    public Map<String,Object> friendRequest(@RequestParam("friendName") String friendName){
+//
+//        Map<String,Object> result = friendBO.searchFriendName(friendName);
+//    }
+//
+//}

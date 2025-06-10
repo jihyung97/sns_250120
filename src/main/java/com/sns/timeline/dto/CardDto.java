@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @Data
 public class CardDto {
-    List<Comment> comments;
+    List<CommentDto> comments;
     Post post;
     UserEntity userEntity;
 

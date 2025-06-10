@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sns.like.Mapper.LikeMapper">
+
+
+    <select id="selectIsLike"  parameterType="map"  resultType="int">
+
+        SELECT
+            count(*)
+        FROM
+        `like`
+        WHERE
+        `postId` = #{postId} and `userId` = #{userId}
+
+    </select>
+
+    <select id="selectLikeCount"  parameterType="int"  resultType="int">
+
+        SELECT
+        count(*)
+        FROM
+        `like`
+        WHERE
+        `postId` = #{postId}
+
+    </select>
+
+    <delete id="deleteLike"  parameterType="map"  >
+
+        DELETE from
+        `like`
+        WHERE
+        `postId` = #{postId} and `userId` = #{userId}
+    </delete>
+
+
+    <insert
+            id = "insertLike"
+            parameterType = "map"
+    >
+        INSERT INTO `like`
+        (
+        `postId`
+        ,`userId`
+        ,`createdAt`
+        )
+        Values
+        (
+            #{postId}
+            ,#{userId}
+             ,NOW()
+        )
+
+    </insert>
+
+
+
+</mapper>

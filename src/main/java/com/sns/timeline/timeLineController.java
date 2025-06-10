@@ -6,6 +6,8 @@ import com.sns.post.domain.Post;
 import com.sns.post.dto.PostWithComments;
 import com.sns.post.service.PostBO;
 import com.sns.post.service.PostService;
+import com.sns.timeline.dto.CardDto;
+import com.sns.timeline.service.TImeLineBO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,7 @@ public class timeLineController {
     private final PostBO postBO;
     private final CommentBO commentBO;
     private final PostService postService;
+    private final TImeLineBO tImeLineBO;
     @RequestMapping("/timeline")
     public String timeLineView(HttpSession session, Model model){
         Integer userId = (Integer) session.getAttribute("userId");
@@ -29,9 +32,10 @@ public class timeLineController {
         }
        List<PostWithComments> postWithCommentsList = postService.getPostWithCommentsByUserId(userId);
         List<Post> postList = postBO.getPostListByUserId(userId);
-       System.out.println(postWithCommentsList + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        List<CardDto> cardDtoList = tImeLineBO.generateCardDtoList();
 
-        model.addAttribute("postWithCommentsList",postWithCommentsList);
+
+        model.addAttribute("cardDtoList",cardDtoList);
 
         return("timeline/timeline");
     }
