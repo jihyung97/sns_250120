@@ -28,7 +28,13 @@ public class LikeBO {
         return count;
 
     }
-    private int countLike(int postId){
+
+    public boolean checkILike(int postId, int userId){
+        return likeMapper.selectIsLike(postId,userId) > 0 ? true : false;
+    }
+
+
+    public int countLike(int postId){
         return likeMapper.selectLikeCount(postId);
     }
 

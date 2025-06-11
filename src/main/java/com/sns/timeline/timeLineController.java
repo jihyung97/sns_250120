@@ -30,9 +30,9 @@ public class timeLineController {
         if(userId == null){
             return("redirect:/user/sign-in-view");
         }
-       List<PostWithComments> postWithCommentsList = postService.getPostWithCommentsByUserId(userId);
-        List<Post> postList = postBO.getPostListByUserId(userId);
-        List<CardDto> cardDtoList = tImeLineBO.generateCardDtoList();
+//       List<PostWithComments> postWithCommentsList = postService.getPostWithCommentsByUserId(userId);
+//        List<Post> postList = postBO.getPostListByUserId(userId);
+        List<CardDto> cardDtoList = tImeLineBO.generateCardDtoList(userId);
 
 
         model.addAttribute("cardDtoList",cardDtoList);

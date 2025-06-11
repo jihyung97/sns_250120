@@ -85,9 +85,16 @@
         <!--좋아요-->
         <div class=" d-flex justify-content-start">
           <a href="#" class="like-btn ml-2">
-            <img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
+              <img
+                  th:src="${cardDto.doILike} ? '/image/filled_heart.png' : 'https://www.iconninja.com/files/214/518/441/heart-icon.png'"
+                  class="like-image"
+                  width="18"
+                  height="18"
+                  alt="heart icon"
+              >
+            
           </a>
-          <span class="ml-2">좋아요 10개</span>
+            <span>좋아요 </span> <span th:text="${cardDto.likeCount}"  class="like-count"></span> <span>개</span>
 
         </div>
 
@@ -133,14 +140,14 @@
 
   </section>
   </div>
-</th:block>
+
 
   <script>
     $(function(){
      // fileUploadBtn을 눌렀을 때 id가 file인 버튼을 클릭한 것으로 동작하게 함
 
       $("#fileUploadBtn").on("click", function(e){
-         e.preventDefault;
+         e.preventDefault();
         $("#file").click(); 
 
       })
@@ -254,7 +261,7 @@
         });
       });
 
-
+     /*
       $("#friend-search-btn").on("click",function(){
 
         let friendName = $("#search-friend").val().trim();
@@ -280,6 +287,46 @@
     
 
 
+*/
+
+
+         $(".like-btn").on("click",function(e){
+          e.preventDefault();
+        
+        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트
+        let postId = $(this).closest(".card").data('postid'); 
+        let countText = $(this).closest(".card").find(".like-count");
+        let likeImage= $(this).closest(".card").find(".like-image"); 
+         let count = parseInt(countText.text());
+       
+        $.ajax({
+          type:"get"
+          ,url:"/like/" + postId
+          // 서버에서 response받아옴
+          ,success: function(data){
+            if(data.result == "삽입 성공"){
+              likeImage.attr("src", '/image/filled_heart.png');
+             
+              countText.text(++count);
+
+            } else if(data.result =="삭제 성공"){
+               likeImage.attr("src", 'https://www.iconninja.com/files/214/518/441/heart-icon.png');
+             
+              countText.text(--count);
+              
+            }else{
+              alert("토글 실패");
+            }
+          }
+          ,error: function(e){
+            alert("댓글 삭제를 실패하였습니다");
+          }
+          
+          // 서버에서 response받아옴
+      
+          
+        });
+      });
 
 
 

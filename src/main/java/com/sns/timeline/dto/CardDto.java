@@ -19,9 +19,12 @@ import java.util.List;
 @Setter
 @Data
 public class CardDto {
-    List<CommentDto> comments;
-    Post post;
-    UserEntity userEntity;
+    private List<CommentDto> comments;
+    private Post post;
+    private UserEntity userEntity;
+    private int likeCount;
+    private boolean doILike;
+
 
 
 

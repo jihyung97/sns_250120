@@ -66,4 +66,22 @@
         ORDER BY `id` DESC
     </select>
 
+
+    <select
+
+            id = "countPostById"
+            parameterType="int"
+            resultType = "int"
+    >
+        SELECT
+            count(*)
+
+
+        FROM
+            `post`
+
+        WHERE
+            `id` = #{id}
+    </select>
+
 </mapper>

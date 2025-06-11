@@ -3,6 +3,7 @@ package com.sns.timeline.service;
 import com.sns.comment.domain.Comment;
 import com.sns.comment.dto.CommentDto;
 import com.sns.comment.service.CommentBO;
+import com.sns.like.service.LikeBO;
 import com.sns.post.domain.Post;
 import com.sns.post.dto.PostWithComments;
 import com.sns.post.service.PostBO;
@@ -21,7 +22,8 @@ public class TImeLineBO {
     private final CommentBO commentBO;
     private final UserBO userBO;
     private final PostBO postBO;
-    public List<CardDto> generateCardDtoList() {
+    private final LikeBO likeBO;
+    public List<CardDto> generateCardDtoList(int userId) {
 
         List<CardDto> cardList = new ArrayList<>();
         //글 목록을 가져온다 List<Post>
@@ -37,7 +39,7 @@ public class TImeLineBO {
             //post 추가
             cardDto.setPost(post);
             //commentList 추가 ->commentDtoList 추가로 변경
-
+            System.out.println("여기까지!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             List<Comment> commentList = commentBO.getCommentListBypostId(post.getId());
             List<CommentDto> commentDtoList = new ArrayList<>();
 
@@ -67,6 +69,8 @@ public class TImeLineBO {
             //userEntity 추가 (나중에는 Dto로 수정?)
             cardDto.setUserEntity(userBO.getUserEntityByPostId(post.getId()));
             //like 추가
+            cardDto.setLikeCount(likeBO.countLike(post.getId()));
+            cardDto.setDoILike(likeBO.checkILike(post.getId(),userId));
 
 
 
