@@ -38,17 +38,27 @@
   <section id = "friendList">
     <div class="d-flex">
       <input type="text" id="search-friend">
-      <span id="friend-search-btn">친구요청</span>
+      <button class="button form-control" id="friend-search-btn">친구요청</button>
 
 
     </div>
     <div>
-      <div><h3>친구요청 리스트</h3></div>
+      <div><h3>받은 친구요청</h3></div>
       <div>
         <!--th:each로 친구요청 리스트-->
-        <div  class="d-flex">
-          <span></span>
+        <div th:each="friendRequest : ${FriendRequestList}">
+          <span th:text="${friendRequest.name}"></span>
           <span class="friend-add-btn">친구추가</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div><h3>내 친구요청</h3></div>
+      <div>
+        <!--th:each로 내가 보낸 친구요청 리스트-->
+        <div th:each="myfriendRequest : ${myFriendRequestList}">
+          <span th:text="${myfriendRequest.name}"></span>
+          <span class="friend-cancel-btn">취소</span>
         </div>
       </div>
     </div>
@@ -261,21 +271,21 @@
         });
       });
 
-     /*
+     
       $("#friend-search-btn").on("click",function(){
 
         let friendName = $("#search-friend").val().trim();
         // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
         $.ajax({
           type:"get"
-          ,url:"/friend/friend-request"
+          ,url:"/friend-request/add-friend-request"
           ,data : {"friendName" : friendName}
           // 서버에서 response받아옴
           ,success: function(data){
-            if(data.code == 200){
+            if(data.result == "요청성공"){
               location.reload();
             } else{
-              alert(data.error_message);
+              alert(data.result);
             }
           }
           ,error: function(e){
@@ -287,7 +297,7 @@
     
 
 
-*/
+
 
 
          $(".like-btn").on("click",function(e){

@@ -61,7 +61,7 @@ public class UserBO {
 
     public Integer getUserIdByUserName(String userName)
     {
-        UserEntity user = userRepository.findByName(userName).orElse(null);
+        UserEntity user = userRepository.findFirstByName(userName).orElse(null);
         if(user == null){
             return null;
 

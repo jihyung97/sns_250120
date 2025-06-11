@@ -16,7 +16,7 @@ public class FriendRequestDto {
 
     private int myId;
     private int friendId;
-    private String friendName;
+    private String name;
     private LocalDateTime createdAt;
 
 
