@@ -84,4 +84,33 @@
             `id` = #{id}
     </select>
 
+
+
+
+    <delete
+            id = "deletePostById"
+            parameterType="int"
+
+    >
+        DELETE
+
+        FROM
+        `post`
+        WHERE
+        `postId` = #{postId}
+
+    </delete>
+    <select
+        id="selectPostById"
+        parameterType="int"
+        resultType="com.sns.post.domain.Post"
+        >
+        SELECT
+         *
+        FROM
+        `post`
+
+        WHERE
+        `id` = #{id}
+    </select>
 </mapper>

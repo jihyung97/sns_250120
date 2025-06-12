@@ -1,5 +1,6 @@
 package com.sns.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+@Slf4j
 @Component
 public class FileManagerService {
 
@@ -38,6 +39,33 @@ public class FileManagerService {
         }
         return "/images" + "/" + fileName + "/" + file.getOriginalFilename();
 
+    }
+
+    public void deleteFile(String imagePath){
+        Path path = Paths.get(FILE_UPLOAD_PATH + imagePath.replace("/images/",""));
+
+        if(Files.exists(path)){
+            try{
+                Files.delete(path);
+            }catch(IOException e){
+                log.info("[파일 image 삭제] imagePath:{}",imagePath);
+                return;
+
+            }
+
+            //이미지의 폴더 삭제
+            path = path.getParent();
+
+            if(Files.exists(path)){
+                try{
+                    Files.delete(path);
+                } catch(IOException e){
+                    log.info("path:{}",path);
+                }
+            }
+
+
+        }
     }
 }
 

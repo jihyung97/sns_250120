@@ -36,9 +36,14 @@ public class PostBO {
 
         return postMapper.insertPost(userId,content,imagePath);
     }
+
     public boolean isPostExist(int postId)  {
         return postMapper.countPostById(postId) > 0 ? true: false;
     }
+
+    public int removePostById(int postId){return postMapper.deletePostById(postId);}
+
+    public Post getPostById(int postId){return postMapper.selectPostById(postId);}
 
 
 }

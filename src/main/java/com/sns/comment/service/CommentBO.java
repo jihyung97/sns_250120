@@ -39,6 +39,11 @@ public class CommentBO {
 
         return commentMapper.selectCommentListByPostId(postId);}
 
+
+    public int removeCommentsByPostId(int postId){
+        return commentMapper.deleteCommentsByPostId(postId);
+    }
+
 //    public Map<Integer , List<Comment>> selectCommentByPostIdOfUserId (int UserId){
 //        List<Post> PostList = postMapper.selectPostByUserId(userId);  //userId로 Post를 내림차순으로 가져온다
 //        List< List<Comment>> commentListByPostIdOfUserId = new HashMap<>(); // 가져온 포스트 별 댓글리스트를 생성

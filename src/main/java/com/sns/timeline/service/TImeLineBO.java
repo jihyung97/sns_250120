@@ -3,6 +3,7 @@ package com.sns.timeline.service;
 import com.sns.comment.domain.Comment;
 import com.sns.comment.dto.CommentDto;
 import com.sns.comment.service.CommentBO;
+import com.sns.common.FileManagerService;
 import com.sns.like.service.LikeBO;
 import com.sns.post.domain.Post;
 import com.sns.post.dto.PostWithComments;
@@ -23,6 +24,7 @@ public class TImeLineBO {
     private final UserBO userBO;
     private final PostBO postBO;
     private final LikeBO likeBO;
+    private final FileManagerService fileManagerService;
     public List<CardDto> generateCardDtoList(int userId) {
 
         List<CardDto> cardList = new ArrayList<>();
@@ -80,5 +82,24 @@ public class TImeLineBO {
         return cardDtoList;
 
 
+    }
+
+    public boolean deleteCard(int userId, int postId){
+        Post post = postBO.getPostById(postId);
+        if(userId !=post.getUserId()){
+            return false;
+
+        }else{
+            // 이미지 삭제
+            fileManagerService.deleteFile(post.getImagePath());
+
+            //게시글 삭제
+            postBO.removePostById(postId);
+            //게시글의 댓글 삭제
+            commentBO.removeCommentsByPostId(postId);
+            //게시글의 좋아요 삭제
+            likeBO.removeLikeByPostId(postId);
+            return true;
+        }
     }
 }

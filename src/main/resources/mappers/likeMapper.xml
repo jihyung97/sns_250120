@@ -54,6 +54,15 @@
 
     </insert>
 
+    <delete
+        id="deleteLikeByPostId"
+        parameterType="int"
+    >
+        DELETE from
+        `like`
+        WHERE
+        `postId` = #{postId}
+    </delete>
 
 
 </mapper>

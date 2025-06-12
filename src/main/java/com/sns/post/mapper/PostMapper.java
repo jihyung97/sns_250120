@@ -17,5 +17,7 @@ public interface PostMapper {
     public List<Post> selectPostListDescByCreatedAt();
 
     public int countPostById(int postId);
+    public int deletePostById(int postId);
+    public Post selectPostById(int postId);
 
 }
