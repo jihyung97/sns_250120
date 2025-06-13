@@ -12,6 +12,7 @@ import com.sns.timeline.dto.CardDto;
 import com.sns.user.service.UserBO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -84,14 +85,16 @@ public class TImeLineBO {
 
     }
 
-    public boolean deleteCard(int userId, int postId){
+    @Transactional
+    public boolean deleteCard( int postId){
         Post post = postBO.getPostById(postId);
-        if(userId !=post.getUserId()){
-            return false;
-
-        }else{
-            // 이미지 삭제
+        if(post.getImagePath()!= null){
             fileManagerService.deleteFile(post.getImagePath());
+        }
+
+        try {
+            // 이미지 삭제
+
 
             //게시글 삭제
             postBO.removePostById(postId);
@@ -100,6 +103,15 @@ public class TImeLineBO {
             //게시글의 좋아요 삭제
             likeBO.removeLikeByPostId(postId);
             return true;
+
+
         }
+        catch (Exception e) {
+            // 로그 남기고 false 반환
+            e.printStackTrace(); // or log.error(...)
+            return false;
+        }
+
+
     }
 }

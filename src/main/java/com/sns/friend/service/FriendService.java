@@ -16,7 +16,7 @@ public class FriendService {
     private final FriendBO friendBO;
     private final FriendRequestBO friendRequestBO;
 
-    public int addFriendAndDeleteRequest(int myId, int friendId){
+    public boolean addFriendAndDeleteRequest(int myId, int friendId){
         try {
             friendBO.addFriend(myId,friendId);
             friendRequestBO.deleteFriendRequestByMyIdAndFriendId(myId,friendId);

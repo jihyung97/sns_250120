@@ -81,7 +81,7 @@
             `post`
 
         WHERE
-            `id` = #{id}
+            `id` = #{postId}
     </select>
 
 
@@ -97,7 +97,7 @@
         FROM
         `post`
         WHERE
-        `postId` = #{postId}
+        `id` = #{postId}
 
     </delete>
     <select
@@ -111,6 +111,6 @@
         `post`
 
         WHERE
-        `id` = #{id}
+        `id` = #{postId}
     </select>
 </mapper>

@@ -82,9 +82,10 @@
         <!--더보기 -->
         <div class="bg-default w-100 d-flex justify-content-between ">
           <div><span>글쓴이</span></div>
-          <a href="#" class="more-btn">
+          <a href="#" type="button" class="more-btn" data-toggle="modal" data-target="#more-modal" th:data-post-id="${cardDto.post.id}" >
             <img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
           </a>
+        
 
         </div>
         <!--이미지-->
@@ -153,6 +154,23 @@
   </section>
   </div>
 
+  <!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="more-modal"  aria-hidden="true">
+  <div class="modal-dialog-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div>
+        <a href="#" id="post-delete-btn">삭제하기</a>
+      </div>
+      <hr>
+      <div>
+        <a href="#" data-dismiss="modal">취소</a>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script>
     $(function(){
@@ -340,6 +358,32 @@
           });
       });
 
+
+
+
+       $(".friend-add-btn").on("click",function(){
+
+        let friendId = $(this).data(`friend-id`);
+        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+        $.ajax({
+          type:"get"
+          ,url:"/friend/add"
+          ,data : {"friendId" : friendId}
+          // 서버에서 response받아옴
+          ,success: function(data){
+            if(data.result = "성공"){
+              location.reload();
+            } else{
+              alert(data.result);
+            }
+          }
+          ,error: function(e){
+            alert("친구 추가를 실패하였습니다");
+          }
+          
+        });
+      });
+      
       
       $(".friend-add-btn").on("click",function(){
 
@@ -411,6 +455,63 @@
           });
       });
 
+       $(".friend-add-btn").on("click",function(){
+
+        let friendId = $(this).data(`friend-id`);
+        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+        $.ajax({
+          type:"get"
+          ,url:"/friend/add"
+          ,data : {"friendId" : friendId}
+          // 서버에서 response받아옴
+          ,success: function(data){
+            if(data.result = "성공"){
+              location.reload();
+            } else{
+              alert(data.result);
+            }
+          }
+          ,error: function(e){
+            alert("친구 추가를 실패하였습니다");
+          }
+          
+        });
+      });
+
+      $(".more-btn").on("click",function(){
+
+            let postId = $(this).data(`post-id`);
+            // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+
+            $("#more-modal").data("post-id",postId);
+
+          
+      });
+
+      $("#post-delete-btn").on("click",function(){
+        let postId = $("#more-modal").data("post-id");
+
+        $.ajax({
+            type:"delete"
+            ,url:"/timeline/delete-card"
+            ,data : {"postId" : postId}
+            // 서버에서 response받아옴
+            ,success: function(data){
+              if(data.result = "삭제 성공"){
+                location.reload();
+              } else{
+                alert(data.result);
+              }
+            }
+            ,error: function(e){
+              alert("게시글 삭제를 실패하였습니다");
+            }
+            
+          });
+
+
+
+      })
      
      
 
