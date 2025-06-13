@@ -12,6 +12,7 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequestEnti
     public Optional<FriendRequestEntity> findByMyIdAndFriendId(int myId, int friendId);
     public List<FriendRequestEntity> findByMyId(int myId);
     public List<FriendRequestEntity> findByFriendId(int friendId);
+    int deleteByMyIdAndFriendId(int myId, int friendId);
 
 
 

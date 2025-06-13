@@ -46,9 +46,10 @@
       <div><h3>받은 친구요청</h3></div>
       <div>
         <!--th:each로 친구요청 리스트-->
-        <div th:each="friendRequest : ${FriendRequestList}">
-          <span th:text="${friendRequest.name}"></span>
-          <span class="friend-add-btn">친구추가</span>
+        <div th:each="friendRequest : ${FriendRequestList}" class="friendRequest">
+          <span th:text="${friendRequest.name}" class="request-name"></span>
+          <!--친구요청 리스트에서는 myId가 요청을 보낸 친구이므로 th데이터 friend-Id 는 friendrequestDTo의 myId이다-->
+          <span class="friend-add-btn" th:data-friend-id ="${friendRequest.myId}">친구추가</span>
         </div>
       </div>
     </div>
@@ -56,19 +57,20 @@
       <div><h3>내 친구요청</h3></div>
       <div>
         <!--th:each로 내가 보낸 친구요청 리스트-->
-        <div th:each="myfriendRequest : ${myFriendRequestList}">
-          <span th:text="${myfriendRequest.name}"></span>
-          <span class="friend-cancel-btn">취소</span>
+        <div th:each="myfriendRequest : ${myFriendRequestList}" >
+          <span th:text="${myfriendRequest.name}" class="myrequest-name"></span>
+          <span class="friend-cancel-btn" th:data-friend-id="${myfriendRequest.friendId}">취소</span>
         </div>
       </div>
     </div>
     <div>
       <div><h3>친구목록</h3></div>
       <!--th:each로 친구 리스트-->
-      <div >
-        <span class="friendName"></span>
-        <span class="friend-delete-btn">친구 삭제</span>
-      </div>
+        <div th:each="friendDto : ${FriendDtoList}" >
+          <span th:text="${friendDto.name}" class="friendName"></span>
+          <span class="friend-delete-btn" th:data-friend-id="${friendDto.friendId}">친구 삭제</span>
+        </div>
+   
 
     </div>
   </section>
@@ -301,44 +303,116 @@
 
 
          $(".like-btn").on("click",function(e){
-          e.preventDefault();
+            e.preventDefault();
+          
+          // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트
+          let postId = $(this).closest(".card").data('postid'); 
+          let countText = $(this).closest(".card").find(".like-count");
+          let likeImage= $(this).closest(".card").find(".like-image"); 
+          let count = parseInt(countText.text());
         
-        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트
-        let postId = $(this).closest(".card").data('postid'); 
-        let countText = $(this).closest(".card").find(".like-count");
-        let likeImage= $(this).closest(".card").find(".like-image"); 
-         let count = parseInt(countText.text());
-       
+          $.ajax({
+            type:"get"
+            ,url:"/like/" + postId
+            // 서버에서 response받아옴
+            ,success: function(data){
+              if(data.result == "삽입 성공"){
+                likeImage.attr("src", '/image/filled_heart.png');
+              
+                countText.text(++count);
+
+              } else if(data.result =="삭제 성공"){
+                likeImage.attr("src", 'https://www.iconninja.com/files/214/518/441/heart-icon.png');
+              
+                countText.text(--count);
+                
+              }else{
+                alert("토글 실패");
+              }
+            }
+            ,error: function(e){
+              alert("댓글 삭제를 실패하였습니다");
+            }
+            
+            // 서버에서 response받아옴
+        
+            
+          });
+      });
+
+      
+      $(".friend-add-btn").on("click",function(){
+
+        let friendId = $(this).data(`friend-id`);
+        // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
         $.ajax({
           type:"get"
-          ,url:"/like/" + postId
+          ,url:"/friend/add"
+          ,data : {"friendId" : friendId}
           // 서버에서 response받아옴
           ,success: function(data){
-            if(data.result == "삽입 성공"){
-              likeImage.attr("src", '/image/filled_heart.png');
-             
-              countText.text(++count);
-
-            } else if(data.result =="삭제 성공"){
-               likeImage.attr("src", 'https://www.iconninja.com/files/214/518/441/heart-icon.png');
-             
-              countText.text(--count);
-              
-            }else{
-              alert("토글 실패");
+            if(data.result = "성공"){
+              location.reload();
+            } else{
+              alert(data.result);
             }
           }
           ,error: function(e){
-            alert("댓글 삭제를 실패하였습니다");
+            alert("친구 추가를 실패하였습니다");
           }
-          
-          // 서버에서 response받아옴
-      
           
         });
       });
 
 
+        $(".friend-cancel-btn").on("click",function(){
+
+          let friendId = $(this).data(`friend-id`);
+          // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+          $.ajax({
+            type:"delete"
+            ,url:"/friend-request/delete-myfriend-request"
+            ,data : {"friendId" : friendId}
+            // 서버에서 response받아옴
+            ,success: function(data){
+              if(data.result = "요청 삭제"){
+                location.reload();
+              } else{
+                alert(data.result);
+              }
+            }
+            ,error: function(e){
+              alert("친구 삭제를 실패하였습니다");
+            }
+            
+          });
+      });
+
+       $(".friend-delete-btn").on("click",function(){
+
+          let friendId = $(this).data(`friend-id`);
+          // 누른 코멘트 댓글에서 가장 가까운 card의 th:data 의 postId를 셀렉트 
+          $.ajax({
+            type:"delete"
+            ,url:"/friend/delete-friend"
+            ,data : {"friendId" : friendId}
+            // 서버에서 response받아옴
+            ,success: function(data){
+              if(data.result = "삭제 성공"){
+                location.reload();
+              } else{
+                alert(data.result);
+              }
+            }
+            ,error: function(e){
+              alert("친구 삭제를 실패하였습니다");
+            }
+            
+          });
+      });
+
+     
+     
 
     });
 

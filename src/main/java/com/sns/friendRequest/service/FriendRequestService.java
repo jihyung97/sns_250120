@@ -13,6 +13,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class FriendRequestService {
     private final UserBO userBO;
+    private final FriendBO friendBO;
 
     private final FriendRequestBO friendRequestBO;
 
@@ -30,13 +31,19 @@ public class FriendRequestService {
             return result;
 
         }
-        //이미 친구 요청을 했는지 확인한다 in: 로그인된 세션의 userId, 친구요청한 친구Id
-        boolean isFriendRequestExist = friendRequestBO.checkFriendRequestExist(myId,friendId);
+        //이미 친구 요청을 했는지 확인한다. 또한 상대방측이 요청을 이미 했는지도 확인한다. in: 로그인된 세션의 userId, 친구요청한 친구Id
+        boolean isFriendRequestExist = friendRequestBO.checkFriendRequestExist(myId,friendId) || friendRequestBO.checkFriendRequestExist(friendId,myId);
+
+        //이미 친구인지도 확인한다.
+        boolean isFriend = friendBO.getFriend(myId, friendId) == null ? false: true;
         if(isFriendRequestExist){
             result.put("result","이미요청됨");
+        }else if(isFriend){
+            result.put("result", "이미 친구입니다");
         }else{
            int rowCount = friendRequestBO.addFriendRequest(myId,friendId);
            if(rowCount > 0){
+
                result.put("result", "요청성공");
            }else{
                result.put("result", "요청실패");
@@ -88,7 +95,7 @@ public class FriendRequestService {
         List<FriendRequestDto> friendRequestDtoList = new ArrayList<>();
         for(FriendRequestEntity friendRequest : friendRequestEntityList){
             FriendRequestDto friendRequestDto = FriendRequestDto.builder()
-                    .myId(myId)
+                    .myId(friendRequest.getMyId())
                     .friendId(friendRequest.getFriendId())
                     //friendId로 name을 찾을 수 없으면 탈퇴한 유저로 나오게 함
                     .name(idToName.getOrDefault(friendRequest.getMyId(),"탈퇴한 유저"))

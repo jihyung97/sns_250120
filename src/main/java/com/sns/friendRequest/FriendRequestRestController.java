@@ -4,10 +4,7 @@ import com.sns.friend.service.FriendRequestService;
 import com.sns.friendRequest.service.FriendRequestBO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +38,31 @@ public class FriendRequestRestController {
 
 
     }
+
+    @DeleteMapping("/delete-myfriend-request")
+    public Map<String,Object> deleteFriendRequest(@RequestParam("friendId") int friendId,
+                                               HttpSession session
+    )
+    {
+        Map<String,Object> result = new HashMap<>();
+        Integer myId = (Integer)session.getAttribute("userId");
+        if(myId == null){
+            result.put("result","세션아이디없음");
+            return result;
+        }else{
+            int rowCount = friendRequestBO.deleteFriendRequestByMyIdAndFriendId(myId,friendId);
+            if(rowCount > 0){
+                result.put("result", "요청 삭제");
+            }else{
+                result.put("result", "삭제 실패");
+            }
+
+        }
+        return result;
+
+
+    }
+
 //    public Map<String,Object> getFriendRequestList(
 //                                               HttpSession session
 //    )
